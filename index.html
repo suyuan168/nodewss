@@ -1,723 +1,837 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>asdfasdfsadf</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #2e7d32;
-            --secondary: #4caf50;
-            --accent: #8bc34a;
-            --light: #e8f5e9;
-            --dark: #1b5e20;
-            --text: #333333;
-            --white: #ffffff;
-        }
-
-        body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo i {
-            font-size: 2rem;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 2rem;
-        }
-
-        nav ul li a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 0;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--accent);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            color: var(--white);
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: var(--white);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn:hover {
-            background-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        section {
-            padding: 5rem 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent);
-            border-radius: 2px;
-        }
-
-        .section-title p {
-            color: var(--text);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-img {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .about-img:hover img {
-            transform: scale(1.05);
-        }
-
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem 1rem;
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .stat-item i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .stat-item h3 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-item p {
-            color: var(--text);
-        }
-
-        .initiatives {
-            background-color: var(--white);
-        }
-
-        .initiatives-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .initiative-card {
-            background-color: var(--light);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .initiative-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .initiative-img {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .initiative-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .initiative-card:hover .initiative-img img {
-            transform: scale(1.1);
-        }
-
-        .initiative-content {
-            padding: 1.5rem;
-        }
-
-        .initiative-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .initiative-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .cta {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            text-align: center;
-            padding: 5rem 0;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta .btn {
-            background-color: var(--white);
-            color: var(--primary);
-        }
-
-        .cta .btn:hover {
-            background-color: var(--accent);
-            color: var(--white);
-        }
-
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--accent);
-        }
-
-        .footer-column p {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links li a {
-            color: var(--light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links li a:hover {
-            color: var(--accent);
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: var(--white);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        @media (max-width: 992px) {
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .initiatives-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--primary);
-                flex-direction: column;
-                padding: 1rem 0;
-                text-align: center;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            }
-            
-            nav ul.active {
-                display: flex;
-            }
-            
-            nav ul li {
-                margin: 0;
-                padding: 0.8rem 0;
-            }
-            
-            .mobile-menu {
-                display: block;
-            }
-            
-            .initiatives-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animation for stats counter */
-        .counter {
-            transition: all 0.5s ease;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>纯静态网页编辑器（单文件）</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#0c1119;
+      --text:#e6edf3;
+      --muted:#93a4b8;
+      --line:#1d2a3a;
+      --btn:#121c28;
+      --btn2:#152235;
+      --accent:#3b82f6;
+      --danger:#ef4444;
+      --ok:#22c55e;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0; font-family:var(--sans);
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(59,130,246,.16), transparent 60%),
+                  radial-gradient(1000px 500px at 90% 0%, rgba(34,197,94,.10), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .app{
+      max-width: 1400px;
+      margin: 18px auto;
+      padding: 0 14px 18px;
+    }
+    .topbar{
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(11,15,20,.72);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(29,42,58,.55);
+      border-radius: var(--radius);
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+    .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .title{
+      display:flex; align-items:center; gap:10px; margin-right: 6px;
+      font-weight: 700; letter-spacing:.2px;
+    }
+    .dot{
+      width:12px; height:12px; border-radius:50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(59,130,246,.15);
+    }
+    .pill{
+      font-size: 12px; color: var(--muted);
+      border: 1px solid rgba(29,42,58,.7);
+      background: rgba(15,22,32,.55);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+    .btn{
+      cursor:pointer;
+      border: 1px solid rgba(29,42,58,.9);
+      background: linear-gradient(180deg, rgba(18,28,40,.95), rgba(10,16,24,.95));
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      display:inline-flex; align-items:center; gap:8px;
+      transition: transform .04s ease, border-color .15s ease, background .15s ease;
+      user-select:none;
+    }
+    .btn:hover{ border-color: rgba(59,130,246,.7); background: linear-gradient(180deg, rgba(21,34,53,.98), rgba(12,18,28,.98)); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{ border-color: rgba(59,130,246,.85); box-shadow: 0 0 0 3px rgba(59,130,246,.18) inset; }
+    .btn.danger{ border-color: rgba(239,68,68,.85); }
+    .btn.ghost{ background: rgba(15,22,32,.35); }
+    .btn small{ color: var(--muted); font-size: 11px; }
+    .sep{
+      width:1px; height: 30px;
+      background: rgba(29,42,58,.9);
+      margin: 0 2px;
+    }
+    .input{
+      border: 1px solid rgba(29,42,58,.9);
+      background: rgba(12,17,25,.55);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      min-width: 220px;
+      outline:none;
+    }
+    .input:focus{ border-color: rgba(59,130,246,.85); box-shadow: 0 0 0 3px rgba(59,130,246,.16); }
+    .main{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 12px;
+    }
+    @media (max-width: 980px){
+      .main{ grid-template-columns: 1fr; }
+      .sep{ display:none; }
+    }
+    .panel{
+      border: 1px solid rgba(29,42,58,.65);
+      background: linear-gradient(180deg, rgba(15,22,32,.9), rgba(10,16,24,.9));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      min-height: 70vh;
+    }
+    .panelHeader{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(29,42,58,.75);
+      background: rgba(12,17,25,.45);
+    }
+    .panelHeader .left{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    }
+    .badge{
+      font-size: 12px; color: var(--muted);
+      border: 1px solid rgba(29,42,58,.7);
+      background: rgba(12,17,25,.35);
+      padding: 5px 9px;
+      border-radius: 999px;
+    }
+    .status{
+      font-size: 12px; color: var(--muted);
+      display:flex; align-items:center; gap:8px;
+    }
+    .status .led{
+      width:10px; height:10px; border-radius:50%;
+      background: rgba(147,164,184,.6);
+    }
+    .status.ok .led{ background: var(--ok); box-shadow: 0 0 0 6px rgba(34,197,94,.14); }
+    .status.warn .led{ background: #f59e0b; box-shadow: 0 0 0 6px rgba(245,158,11,.14); }
+
+    /* Editor area */
+    .editorWrap{
+      display:flex;
+      flex-direction:column;
+      height: calc(70vh - 52px);
+      min-height: 520px;
+    }
+    .toolbar{
+      display:flex; flex-wrap:wrap; gap:8px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(29,42,58,.75);
+      background: rgba(12,17,25,.35);
+    }
+    .tool{
+      cursor:pointer;
+      border: 1px solid rgba(29,42,58,.85);
+      background: rgba(18,28,40,.55);
+      color: var(--text);
+      padding: 7px 9px;
+      border-radius: 10px;
+      font-size: 12px;
+      display:inline-flex; align-items:center; gap:8px;
+      user-select:none;
+    }
+    .tool:hover{ border-color: rgba(59,130,246,.7); }
+    .tool.active{ border-color: rgba(59,130,246,.95); box-shadow: 0 0 0 3px rgba(59,130,246,.16) inset; }
+    .tool small{ color: var(--muted); font-size: 11px; }
+
+    .tabs{ display:flex; gap:8px; align-items:center; }
+    .tab{
+      cursor:pointer;
+      padding: 7px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(29,42,58,.85);
+      background: rgba(18,28,40,.42);
+      color: var(--muted);
+      font-size: 12px;
+      user-select:none;
+    }
+    .tab.active{
+      color: var(--text);
+      border-color: rgba(59,130,246,.85);
+      background: rgba(21,34,53,.55);
+    }
+
+    .editor, .source{
+      flex: 1;
+      width: 100%;
+      border: 0;
+      outline: none;
+      padding: 16px 16px 22px;
+      background: transparent;
+      color: var(--text);
+      overflow:auto;
+    }
+    .editor{
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .editor[contenteditable="true"]:empty:before{
+      content: "在这里写内容（富文本模式）…";
+      color: rgba(147,164,184,.65);
+    }
+    .source{
+      display:none;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.55;
+      resize: none;
+      white-space: pre;
+    }
+
+    /* Preview */
+    .iframe{
+      width:100%;
+      height: calc(70vh - 52px);
+      min-height: 520px;
+      border: 0;
+      background: white;
+    }
+
+    /* Toast */
+    .toast{
+      position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
+      background: rgba(15,22,32,.92);
+      border: 1px solid rgba(29,42,58,.75);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      font-size: 13px;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .toast.show{ opacity: 1; transform: translateX(-50%) translateY(-6px); }
+
+    /* Content inside editor basic styling */
+    .editor h1,.editor h2,.editor h3{ line-height: 1.2; margin: 18px 0 10px; }
+    .editor p{ margin: 10px 0; }
+    .editor blockquote{
+      margin: 12px 0; padding: 10px 12px;
+      border-left: 4px solid rgba(59,130,246,.8);
+      background: rgba(59,130,246,.08);
+      border-radius: 10px;
+    }
+    .editor code{
+      font-family: var(--mono);
+      background: rgba(147,164,184,.12);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+    .editor pre{
+      font-family: var(--mono);
+      background: rgba(12,17,25,.65);
+      border: 1px solid rgba(29,42,58,.6);
+      padding: 12px;
+      border-radius: 12px;
+      overflow:auto;
+    }
+    .hint{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+    .kbd{
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 2px 6px;
+      border: 1px solid rgba(29,42,58,.8);
+      border-bottom-color: rgba(29,42,58,1);
+      border-radius: 8px;
+      background: rgba(12,17,25,.45);
+      color: var(--text);
+      margin: 0 4px;
+      display:inline-block;
+    }
+    .footer{
+      margin-top: 10px;
+      color: rgba(147,164,184,.75);
+      font-size: 12px;
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between;
+      padding: 0 2px;
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <div class="logo">
-                <i class="fas fa-seedling"></i>
-                <span>Green Network</span>
-            </div>
-            <nav>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#initiatives">Initiatives</a></li>
-                    <li><a href="#get-involved">Get Involved</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+  <div class="app">
+    <div class="topbar">
+      <div class="row" style="justify-content:space-between;">
+        <div class="row">
+          <div class="title"><span class="dot"></span>纯静态网页编辑器</div>
+          <span class="pill">富文本 / 源码一键切换 · 实时预览 · 本地保存 · 导出HTML</span>
         </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container hero-content">
-            <h1>Protect Our Planet, Preserve Our Future</h1>
-            <p>Join the global movement to create a sustainable world through conservation, education, and community action.</p>
-            <a href="#get-involved" class="btn">Join Our Network</a>
+        <div class="row">
+          <input id="docTitle" class="input" placeholder="文档标题（导出文件名）" value="my-page" />
+          <button class="btn ghost" id="btnNew" title="新建"><span>🆕</span>新建</button>
+          <label class="btn ghost" title="打开HTML文件">
+            <span>📂</span>打开
+            <input id="fileOpen" type="file" accept=".html,.htm,text/html" style="display:none" />
+          </label>
+          <button class="btn primary" id="btnSave"><span>💾</span>保存</button>
+          <button class="btn" id="btnExport"><span>⬇️</span>导出HTML</button>
+          <button class="btn danger" id="btnClear"><span>🧹</span>清空</button>
         </div>
-    </section>
+      </div>
+      <div class="footer">
+        <div>快捷键：<span class="kbd">Ctrl/⌘ + S</span>保存 · <span class="kbd">Ctrl/⌘ + E</span>导出 · <span class="kbd">Ctrl/⌘ + /</span>切换模式</div>
+        <div id="lastSaved">未保存</div>
+      </div>
+    </div>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Green Network</h2>
-                <p>We are a global community dedicated to environmental protection and sustainable development.</p>
+    <div class="main">
+      <!-- Editor -->
+      <div class="panel">
+        <div class="panelHeader">
+          <div class="left">
+            <span class="badge">编辑区</span>
+            <div class="tabs">
+              <div class="tab active" id="tabRich">富文本</div>
+              <div class="tab" id="tabSource">HTML 源码</div>
             </div>
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Team planting trees">
-                </div>
-                <div class="about-text">
-                    <h3>Our Mission</h3>
-                    <p>Green Network is committed to creating a sustainable future by protecting natural ecosystems, promoting renewable energy, and empowering communities to take environmental action.</p>
-                    <p>Founded in 2010, we've grown from a small grassroots organization to an international network with over 50,000 members across 120 countries.</p>
-                    <p>Our approach combines scientific research, community engagement, and policy advocacy to address the most pressing environmental challenges of our time.</p>
-                    <a href="#" class="btn">Learn More</a>
-                </div>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <i class="fas fa-tree"></i>
-                    <h3 class="counter" data-target="2500000">0</h3>
-                    <p>Trees Planted</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <h3 class="counter" data-target="50000">0</h3>
-                    <p>Active Members</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-globe-americas"></i>
-                    <h3 class="counter" data-target="120">0</h3>
-                    <p>Countries Reached</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-recycle"></i>
-                    <h3 class="counter" data-target="1500">0</h3>
-                    <p>Cleanup Projects</p>
-                </div>
-            </div>
+          </div>
+          <div class="status ok" id="syncStatus"><span class="led"></span><span id="syncText">已同步预览</span></div>
         </div>
-    </section>
 
-    <!-- Initiatives Section -->
-    <section class="initiatives" id="initiatives">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Initiatives</h2>
-                <p>Discover the key programs and projects we're implementing to protect our planet.</p>
-            </div>
-            <div class="initiatives-grid">
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://dialogue.earth/content/uploads/2021/04/lessons-from-the-rush-to-reforest-china-dialogue-2400x1599.jpg" alt="Reforestation">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Global Reforestation</h3>
-                        <p>Planting millions of trees worldwide to restore ecosystems, combat climate change, and protect biodiversity.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Ocean Conservation">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Ocean Conservation</h3>
-                        <p>Protecting marine ecosystems, reducing plastic pollution, and promoting sustainable fishing practices.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80" alt="Renewable Energy">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Renewable Energy</h3>
-                        <p>Promoting solar, wind, and other clean energy sources to reduce dependence on fossil fuels.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-            </div>
+        <div class="editorWrap">
+          <div class="toolbar" id="toolbar">
+            <div class="tool" data-cmd="bold" title="加粗"><span>𝐁</span><small>Bold</small></div>
+            <div class="tool" data-cmd="italic" title="斜体"><span>𝑰</span><small>Italic</small></div>
+            <div class="tool" data-cmd="underline" title="下划线"><span>U̲</span><small>Underline</small></div>
+            <div class="tool" data-cmd="strikeThrough" title="删除线"><span>S̶</span><small>Strike</small></div>
+            <div class="sep"></div>
+
+            <div class="tool" data-cmd="formatBlock" data-val="H1" title="标题1"><span>H1</span></div>
+            <div class="tool" data-cmd="formatBlock" data-val="H2" title="标题2"><span>H2</span></div>
+            <div class="tool" data-cmd="formatBlock" data-val="H3" title="标题3"><span>H3</span></div>
+            <div class="tool" data-cmd="formatBlock" data-val="P" title="段落"><span>¶</span></div>
+            <div class="sep"></div>
+
+            <div class="tool" data-cmd="insertUnorderedList" title="无序列表"><span>• List</span></div>
+            <div class="tool" data-cmd="insertOrderedList" title="有序列表"><span>1. List</span></div>
+            <div class="tool" id="btnQuote" title="引用块"><span>❝</span><small>Quote</small></div>
+            <div class="tool" id="btnCode" title="代码块"><span>⌘</span><small>Code</small></div>
+            <div class="sep"></div>
+
+            <div class="tool" id="btnLink" title="插入链接"><span>🔗</span><small>Link</small></div>
+            <div class="tool" id="btnImage" title="插入图片"><span>🖼️</span><small>Image</small></div>
+            <div class="tool" id="btnHr" title="分割线"><span>—</span><small>HR</small></div>
+            <div class="sep"></div>
+
+            <div class="tool" data-cmd="undo" title="撤销"><span>↩</span><small>Undo</small></div>
+            <div class="tool" data-cmd="redo" title="重做"><span>↪</span><small>Redo</small></div>
+            <div class="tool" id="btnClean" title="清理格式（保留纯文本）"><span>🧼</span><small>Clean</small></div>
+          </div>
+
+          <div id="richEditor" class="editor" contenteditable="true"></div>
+          <textarea id="sourceEditor" class="source" spellcheck="false"></textarea>
         </div>
-    </section>
+      </div>
 
-    <!-- CTA Section -->
-    <section class="cta" id="get-involved">
-        <div class="container">
-            <h2>Join Our Global Movement</h2>
-            <p>Together, we can create a sustainable future for generations to come. Every action counts, no matter how small.</p>
-            <a href="#" class="btn">Become a Member</a>
+      <!-- Preview -->
+      <div class="panel">
+        <div class="panelHeader">
+          <div class="left">
+            <span class="badge">实时预览</span>
+            <span class="badge" id="previewMode">预览：完整HTML</span>
+          </div>
+          <div class="row">
+            <button class="btn ghost" id="btnPopout" title="在新窗口打开预览"><span>🧪</span>新窗口预览</button>
+            <button class="btn ghost" id="btnCopy" title="复制HTML到剪贴板"><span>📋</span>复制HTML</button>
+          </div>
         </div>
-    </section>
+        <iframe id="preview" class="iframe" sandbox="allow-same-origin allow-forms allow-scripts"></iframe>
+      </div>
+    </div>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Green Network</h3>
-                    <p>We are dedicated to protecting our planet through collaborative action, education, and sustainable solutions.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#initiatives">Initiatives</a></li>
-                        <li><a href="#get-involved">Get Involved</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Our Programs</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Reforestation</a></li>
-                        <li><a href="#">Ocean Cleanup</a></li>
-                        <li><a href="#">Wildlife Protection</a></li>
-                        <li><a href="#">Climate Education</a></li>
-                        <li><a href="#">Sustainable Agriculture</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Copper Creek Drive, New York</p>
-                    <p><i class="fas fa-phone"></i> +1 (312) 171-0771</p>
-                    <p><i class="fas fa-envelope"></i> support@greennetwork.org</p>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 Green Network. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <div class="hint">
+      说明：这是一个<strong>纯静态单文件</strong>编辑器，直接保存为 <code>.html</code> 双击打开即可使用。富文本工具栏基于浏览器内置命令（兼容性较好）。你也可以切到“HTML 源码”模式直接写完整页面。
+    </div>
+  </div>
 
-    <script>
-        // Mobile Menu Toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('active');
-        });
+  <div class="toast" id="toast"></div>
 
-        // Counter Animation
-        function animateCounters() {
-            const counters = document.querySelectorAll('.counter');
-            const speed = 200; // The lower the slower
-            
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                
-                const inc = target / speed;
-                
-                if(count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(animateCounters, 1);
-                } else {
-                    counter.innerText = target;
-                }
-            });
-        }
+  <script>
+    // ------------------------------
+    // Pure static HTML editor (single file)
+    // ------------------------------
+    const LS_KEY = "static_editor_doc_v1";
 
-        // Initialize counters when page loads
-        window.addEventListener('load', animateCounters);
+    const docTitle = document.getElementById("docTitle");
+    const richEditor = document.getElementById("richEditor");
+    const sourceEditor = document.getElementById("sourceEditor");
+    const preview = document.getElementById("preview");
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    document.querySelector('nav ul').classList.remove('active');
-                }
-            });
-        });
-    </script>
+    const tabRich = document.getElementById("tabRich");
+    const tabSource = document.getElementById("tabSource");
+    const toolbar = document.getElementById("toolbar");
+    const previewMode = document.getElementById("previewMode");
+    const syncStatus = document.getElementById("syncStatus");
+    const syncText = document.getElementById("syncText");
+    const lastSaved = document.getElementById("lastSaved");
+    const fileOpen = document.getElementById("fileOpen");
+
+    const toast = (msg, ms=1600) => {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(el._t);
+      el._t = setTimeout(()=> el.classList.remove("show"), ms);
+    };
+
+    const nowStr = () => {
+      const d = new Date();
+      const pad = n => String(n).padStart(2,"0");
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    };
+
+    let mode = "rich"; // "rich" | "source"
+    let dirty = false;
+    let autosaveTimer = null;
+
+    const defaultRich = `
+<h1>你好 👋</h1>
+<p>这是一个<strong>纯静态</strong>网页编辑器。你可以用工具栏写内容，也可以切换到 <code>HTML 源码</code> 直接写完整页面。</p>
+<blockquote>提示：导出后就是一个独立的 .html 文件。</blockquote>
+<p>开始写吧！</p>
+`.trim();
+
+    const wrapAsFullHtml = (bodyInner, title) => {
+      const safeTitle = (title || "my-page").replace(/[<>]/g, "");
+      return `<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>${safeTitle}</title>
+  <style>
+    body{ font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; margin: 24px; line-height: 1.7; }
+    img{ max-width: 100%; height: auto; }
+    pre{ background:#0b1020; color:#e6edf3; padding:12px; border-radius:10px; overflow:auto; }
+    code{ background: rgba(0,0,0,.06); padding:2px 6px; border-radius:8px; }
+    blockquote{ border-left: 4px solid #3b82f6; margin: 12px 0; padding: 10px 12px; background: rgba(59,130,246,.08); border-radius: 10px; }
+  </style>
+</head>
+<body>
+${bodyInner}
 </body>
+</html>`;
+    };
 
+    const looksLikeFullHtml = (html) => {
+      const s = (html || "").toLowerCase();
+      return s.includes("<html") || s.includes("<!doctype") || s.includes("<head") || s.includes("<body");
+    };
+
+    const getCurrentHtmlForExport = () => {
+      const title = docTitle.value.trim() || "my-page";
+      if (mode === "source") {
+        const raw = sourceEditor.value || "";
+        if (looksLikeFullHtml(raw)) return raw;
+        return wrapAsFullHtml(raw, title);
+      } else {
+        const body = richEditor.innerHTML || "";
+        return wrapAsFullHtml(body, title);
+      }
+    };
+
+    const updatePreview = () => {
+      const html = getCurrentHtmlForExport();
+      preview.srcdoc = html;
+      previewMode.textContent = looksLikeFullHtml(html) ? "预览：完整HTML" : "预览：片段";
+      setSynced();
+    };
+
+    const setDirty = () => {
+      dirty = true;
+      syncStatus.classList.remove("ok");
+      syncStatus.classList.add("warn");
+      syncText.textContent = "未同步（正在编辑）";
+      scheduleAutosave();
+    };
+
+    const setSynced = () => {
+      dirty = false;
+      syncStatus.classList.remove("warn");
+      syncStatus.classList.add("ok");
+      syncText.textContent = "已同步预览";
+    };
+
+    const scheduleAutosave = () => {
+      clearTimeout(autosaveTimer);
+      autosaveTimer = setTimeout(() => {
+        saveToLocal(false);
+      }, 900);
+    };
+
+    const saveToLocal = (showToast = true) => {
+      const payload = {
+        v: 1,
+        savedAt: Date.now(),
+        title: docTitle.value || "my-page",
+        mode,
+        rich: richEditor.innerHTML,
+        source: sourceEditor.value
+      };
+      localStorage.setItem(LS_KEY, JSON.stringify(payload));
+      lastSaved.textContent = `上次保存：${nowStr()}`;
+      if (showToast) toast("已保存到本地（localStorage）");
+    };
+
+    const loadFromLocal = () => {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return false;
+      try{
+        const payload = JSON.parse(raw);
+        docTitle.value = payload.title || "my-page";
+        richEditor.innerHTML = payload.rich || defaultRich;
+        sourceEditor.value = payload.source || "";
+        lastSaved.textContent = payload.savedAt ? `上次保存：${new Date(payload.savedAt).toLocaleString()}` : "已载入本地内容";
+        mode = payload.mode === "source" ? "source" : "rich";
+        applyMode(mode);
+        updatePreview();
+        toast("已载入本地保存内容");
+        return true;
+      }catch(e){
+        return false;
+      }
+    };
+
+    const applyMode = (m) => {
+      mode = m;
+      if (mode === "rich") {
+        tabRich.classList.add("active");
+        tabSource.classList.remove("active");
+        richEditor.style.display = "block";
+        sourceEditor.style.display = "none";
+        toolbar.style.opacity = "1";
+        toolbar.style.pointerEvents = "auto";
+        // keep source in sync
+        sourceEditor.value = wrapAsFullHtml(richEditor.innerHTML || "", docTitle.value.trim() || "my-page");
+      } else {
+        tabSource.classList.add("active");
+        tabRich.classList.remove("active");
+        richEditor.style.display = "none";
+        sourceEditor.style.display = "block";
+        toolbar.style.opacity = ".55";
+        toolbar.style.pointerEvents = "none";
+        // if empty, seed with full html from rich
+        if (!sourceEditor.value.trim()) {
+          sourceEditor.value = wrapAsFullHtml(richEditor.innerHTML || defaultRich, docTitle.value.trim() || "my-page");
+        }
+      }
+    };
+
+    const downloadText = (filename, text) => {
+      const blob = new Blob([text], {type:"text/html;charset=utf-8"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(()=> URL.revokeObjectURL(a.href), 500);
+    };
+
+    const normalizeFilename = (name) => {
+      const n = (name || "my-page").trim().replace(/[\\/:*?"<>|]+/g, "-");
+      return n.endsWith(".html") ? n : (n + ".html");
+    };
+
+    // ------------------------------
+    // Rich text commands
+    // ------------------------------
+    const exec = (cmd, val=null) => {
+      // execCommand is deprecated but still widely supported; perfect for pure static editor
+      richEditor.focus();
+      document.execCommand(cmd, false, val);
+      setDirty();
+      updatePreview();
+    };
+
+    const insertHtmlAtCursor = (html) => {
+      richEditor.focus();
+      const sel = window.getSelection();
+      if (!sel || sel.rangeCount === 0) {
+        richEditor.innerHTML += html;
+        return;
+      }
+      const range = sel.getRangeAt(0);
+      range.deleteContents();
+      const temp = document.createElement("div");
+      temp.innerHTML = html;
+      const frag = document.createDocumentFragment();
+      let node;
+      let lastNode = null;
+      while ((node = temp.firstChild)) {
+        lastNode = frag.appendChild(node);
+      }
+      range.insertNode(frag);
+      // move caret to the end of inserted content
+      if (lastNode) {
+        range.setStartAfter(lastNode);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      setDirty();
+      updatePreview();
+    };
+
+    // toolbar clicks
+    toolbar.addEventListener("click", (e) => {
+      const btn = e.target.closest(".tool");
+      if (!btn) return;
+      if (btn.dataset.cmd) {
+        const cmd = btn.dataset.cmd;
+        const val = btn.dataset.val || null;
+        exec(cmd, val);
+      }
+    });
+
+    document.getElementById("btnQuote").addEventListener("click", () => {
+      insertHtmlAtCursor(`<blockquote>在这里输入引用内容…</blockquote><p></p>`);
+    });
+
+    document.getElementById("btnCode").addEventListener("click", () => {
+      insertHtmlAtCursor(`<pre><code>// 在这里粘贴代码…</code></pre><p></p>`);
+    });
+
+    document.getElementById("btnHr").addEventListener("click", () => {
+      insertHtmlAtCursor(`<hr />`);
+    });
+
+    document.getElementById("btnLink").addEventListener("click", () => {
+      const url = prompt("请输入链接地址（https://...）");
+      if (!url) return;
+      exec("createLink", url.trim());
+    });
+
+    document.getElementById("btnImage").addEventListener("click", () => {
+      const url = prompt("请输入图片URL（https://...）");
+      if (!url) return;
+      insertHtmlAtCursor(`<img src="${url.trim().replace(/"/g, "&quot;")}" alt="" />`);
+    });
+
+    document.getElementById("btnClean").addEventListener("click", () => {
+      const text = richEditor.innerText || "";
+      richEditor.innerHTML = text
+        .split("\n")
+        .map(line => line.trim() ? `<p>${escapeHtml(line)}</p>` : "")
+        .join("") || "<p></p>";
+      toast("已清理格式（转为纯文本段落）");
+      setDirty();
+      updatePreview();
+    });
+
+    const escapeHtml = (s) => String(s)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+    // ------------------------------
+    // Mode switching
+    // ------------------------------
+    tabRich.addEventListener("click", () => {
+      if (mode === "rich") return;
+      // when leaving source mode, try to extract body if possible
+      const raw = sourceEditor.value || "";
+      if (raw.trim()) {
+        const body = extractBodyInnerHtml(raw);
+        if (body !== null) richEditor.innerHTML = body;
+      }
+      applyMode("rich");
+      toast("切换到富文本模式");
+      updatePreview();
+    });
+
+    tabSource.addEventListener("click", () => {
+      if (mode === "source") return;
+      applyMode("source");
+      toast("切换到HTML源码模式");
+      updatePreview();
+    });
+
+    const extractBodyInnerHtml = (full) => {
+      const s = full;
+      const lower = s.toLowerCase();
+      const bodyStart = lower.indexOf("<body");
+      if (bodyStart === -1) return null;
+      const bodyTagEnd = lower.indexOf(">", bodyStart);
+      if (bodyTagEnd === -1) return null;
+      const bodyEnd = lower.lastIndexOf("</body>");
+      if (bodyEnd === -1) return null;
+      return s.slice(bodyTagEnd + 1, bodyEnd).trim();
+    };
+
+    // ------------------------------
+    // Events to keep preview updated
+    // ------------------------------
+    richEditor.addEventListener("input", () => {
+      setDirty();
+      updatePreview();
+    });
+
+    sourceEditor.addEventListener("input", () => {
+      setDirty();
+      updatePreview();
+    });
+
+    docTitle.addEventListener("input", () => {
+      setDirty();
+      updatePreview();
+    });
+
+    // ------------------------------
+    // Buttons: new/save/export/clear/open/copy/popout
+    // ------------------------------
+    document.getElementById("btnNew").addEventListener("click", () => {
+      if (confirm("确定新建？未保存内容可能丢失。")) {
+        docTitle.value = "my-page";
+        richEditor.innerHTML = defaultRich;
+        sourceEditor.value = "";
+        applyMode("rich");
+        updatePreview();
+        toast("已新建");
+      }
+    });
+
+    document.getElementById("btnSave").addEventListener("click", () => saveToLocal(true));
+
+    document.getElementById("btnExport").addEventListener("click", () => {
+      const html = getCurrentHtmlForExport();
+      const filename = normalizeFilename(docTitle.value || "my-page");
+      downloadText(filename, html);
+      toast("已导出HTML文件");
+    });
+
+    document.getElementById("btnClear").addEventListener("click", () => {
+      if (!confirm("确定清空编辑内容？")) return;
+      richEditor.innerHTML = "<p></p>";
+      sourceEditor.value = "";
+      setDirty();
+      updatePreview();
+      toast("已清空");
+    });
+
+    fileOpen.addEventListener("change", async (e) => {
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      const text = await f.text();
+      // set title from file name
+      const name = (f.name || "my-page").replace(/\.html?$/i,"");
+      docTitle.value = name || "my-page";
+
+      if (looksLikeFullHtml(text)) {
+        sourceEditor.value = text;
+        // also set rich from body if possible
+        const body = extractBodyInnerHtml(text);
+        if (body !== null) richEditor.innerHTML = body;
+        applyMode("source");
+        toast("已打开：完整HTML（源码模式）");
+      } else {
+        richEditor.innerHTML = text;
+        applyMode("rich");
+        toast("已打开：HTML片段（富文本模式）");
+      }
+      updatePreview();
+      e.target.value = "";
+    });
+
+    document.getElementById("btnCopy").addEventListener("click", async () => {
+      const html = getCurrentHtmlForExport();
+      try{
+        await navigator.clipboard.writeText(html);
+        toast("已复制HTML到剪贴板");
+      }catch{
+        toast("复制失败：浏览器限制（可手动全选复制）", 2000);
+      }
+    });
+
+    document.getElementById("btnPopout").addEventListener("click", () => {
+      const html = getCurrentHtmlForExport();
+      const w = window.open("", "_blank");
+      if (!w) return toast("弹窗被拦截了，请允许弹窗", 2000);
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+    });
+
+    // ------------------------------
+    // Keyboard shortcuts
+    // ------------------------------
+    window.addEventListener("keydown", (e) => {
+      const isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.platform);
+      const mod = isMac ? e.metaKey : e.ctrlKey;
+
+      if (mod && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        saveToLocal(true);
+      }
+      if (mod && e.key.toLowerCase() === "e") {
+        e.preventDefault();
+        const html = getCurrentHtmlForExport();
+        downloadText(normalizeFilename(docTitle.value || "my-page"), html);
+        toast("已导出HTML文件");
+      }
+      if (mod && e.key === "/") {
+        e.preventDefault();
+        if (mode === "rich") tabSource.click();
+        else tabRich.click();
+      }
+    });
+
+    // ------------------------------
+    // Init
+    // ------------------------------
+    const init = () => {
+      richEditor.innerHTML = defaultRich;
+      // load local if exists
+      const loaded = loadFromLocal();
+      if (!loaded) {
+        applyMode("rich");
+        updatePreview();
+        lastSaved.textContent = "未保存（建议先 Ctrl/⌘ + S）";
+      }
+    };
+
+    init();
+  </script>
+</body>
 </html>
-
